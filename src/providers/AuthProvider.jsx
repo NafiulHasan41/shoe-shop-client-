@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { FacebookAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import PropTypes from 'prop-types';
 import app from "../firebase/firebase.config";
-import axios from "axios";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
@@ -10,10 +10,12 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
+
 const AuthProvider = ({ children }) => {
     
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const axiosPublic = useAxiosPublic();
    
 
     const createUser = (email, password ) => {
@@ -39,24 +41,34 @@ const AuthProvider = ({ children }) => {
 
     const logOut = async () => {
         setLoading(true);
-           await axios(`${import.meta.env.VITE_API_URL}/logout`, {
-            withCredentials: true,
-          })
-          
         return signOut(auth);
     }
 
     useEffect(() => {
-        
-        const unSubscribe = onAuthStateChanged(auth, currentUser => {
-                setUser(currentUser);
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            if (currentUser) {
+                // get token and store client
+                const userInfo = { email: currentUser.email };
+                axiosPublic.post('/jwt', userInfo)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token);
+                            setLoading(false);
+                        }
+                    })
+            }
+            else {
+                // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+                localStorage.removeItem('access-token');
                 setLoading(false);
-          
+            }
+            
         });
         return () => {
-            unSubscribe();
+            return unsubscribe();
         }
-    }, [])
+    }, [axiosPublic])
 
     const authInfo = {
         user,

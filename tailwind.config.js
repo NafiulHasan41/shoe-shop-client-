@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+
+      backgroundImage: {
+        'bannerImg': "url('https://i.ibb.co/txdgsY6/Kerfin7-NEA-2406.jpg')",
+        
+      },
+
+    },
   },
   plugins: [
     require('daisyui'),
