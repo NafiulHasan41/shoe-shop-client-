@@ -19,7 +19,7 @@ const Shop = () => {
 
     // For handling all sideBar action
 
-    const [itemsPerPage, setItemsPerPage] = useState(12)
+    const [itemsPerPage, setItemsPerPage] = useState(9)
   const [currentPage, setCurrentPage] = useState(1)
   const [count, setCount] = useState(0)
   const [filter, setFilter] = useState('')
@@ -38,14 +38,24 @@ const Shop = () => {
         }/shoes?page=${currentPage}&size=${itemsPerPage}&filter=${filter}&sort=${sort}&search=${search}&shoeSize=${shoeSize}`
       )
       setShoes(data)
-      setCount(data.length)
-      console.log("data", data.length , data)
+     
     }
     getData()
   }, [currentPage, filter, itemsPerPage, search, sort,shoeSize])
 
 
+  useEffect(() => {
+    const getCount = async () => {
+      const { data } = await axios(
+        `${
+          import.meta.env.VITE_API_URL
+        }/shoesCount?filter=${filter}&search=${search}&shoeSize=${shoeSize}`
+      )
 
+      setCount(data.count)
+    }
+    getCount()
+  }, [filter, search,shoeSize])
 
  
   const numberOfPages = Math.ceil(count / itemsPerPage)
@@ -61,7 +71,7 @@ const Shop = () => {
     setSort('')
     setSearch('')
     setSearchText('')
-    setItemsPerPage(12);
+    setItemsPerPage(9);
     setShoeSize('');
   }
 
@@ -74,7 +84,8 @@ const Shop = () => {
 
 
 
-console.log(shoes);
+console.log(pages);
+console.log(count);
 
 
 
@@ -169,9 +180,9 @@ console.log(shoes);
                                             id='page'
                                             className='border p-4 rounded-md text-white bg-blue-400 border-blue-400 w-full'
                                             >
+                                            <option value='9'>9</option>
                                             <option value='12'>12</option>
                                             <option value='18'>18</option>
-                                            <option value='24'>24</option>
                                         </select>
  
                                     </div>
