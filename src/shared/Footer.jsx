@@ -49,7 +49,7 @@ const Footer = () => {
             </Link>
 
             <div>
-                <p className="text-sm text-gray-800 dark:text-gray-300">© 2024 CareerCanvas. All rights reserved.</p>
+                <p className="text-sm text-gray-800 dark:text-gray-300">© 2024 CrossCountry Shoe Shop. All rights reserved.</p>
             </div>
             
             <div className="flex -mx-2">

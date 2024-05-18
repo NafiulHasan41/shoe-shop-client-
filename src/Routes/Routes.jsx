@@ -6,6 +6,7 @@ import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import Root from "../layouts/Root";
 import ErrorPage from "../pages/ErrorPage";
+import Shop from "../pages/Shop";
 
   export const router = createBrowserRouter([
     {
@@ -24,6 +25,11 @@ import ErrorPage from "../pages/ErrorPage";
         {
           path: 'register',
           element: <Register/>
+        }
+        ,
+        {
+          path: 'shop',
+          element: <Shop/>
         }
       ]
     },

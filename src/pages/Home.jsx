@@ -5,7 +5,12 @@ const Home = () => {
     return (
         <div className=" -mt-20">
             <Banner/>
+
+            <div>
+            
+             </div>
         </div>
+        
     );
 };
 
