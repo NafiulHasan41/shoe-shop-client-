@@ -10,7 +10,7 @@ import SocialLogin from "./SocialLogin";
 
 
 const Register = () => {  const axiosPublic = useAxiosPublic();
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const {  register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -19,30 +19,38 @@ const Register = () => {  const axiosPublic = useAxiosPublic();
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log(loggedUser);
+                console.log("logged in user" , loggedUser);
                 updateUserProfile(data.name, data.photoURL)
-                    .then(() => {
-                        // create user entry in the database
+                    .then( async() => {
+                       
                         const userInfo = {
                             name: data.name,
                             email: data.email
                         }
-                        axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    console.log('user added to the database')
-                                    reset();
-                                    Swal.fire({
-                                        position: 'top-end',
-                                        icon: 'success',
-                                        title: 'User created successfully.',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    navigate('/');
-                                }
-                            })
 
+                        try{
+
+                            const res = await  axiosPublic.post('/users', userInfo)
+                           
+                            if (res.data.insertedId) {
+
+                                await axiosPublic.post(`/jwt`,
+                                {
+                                  email: data.email,
+                                },
+                                { withCredentials: true }
+                              )
+                                Swal.fire('User created successfully and Login Successful');
+                                reset();
+                                navigate('/');
+                            }
+
+                        }
+                        
+                        catch (error) {
+
+                            Swal.fire(error)
+                        } 
 
                     })
                     .catch(error => Swal.fire(error))
