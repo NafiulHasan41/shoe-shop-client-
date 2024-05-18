@@ -1,5 +1,6 @@
 import Banner from "../components/Banner";
 import BestSelling from "../components/BestSelling";
+import ContactForm from "../components/ContactForm";
 import Hero from "../components/Hero";
 import Highlight from "../components/Highlight";
 import NewArrival from "../components/NewArrival";
@@ -31,6 +32,11 @@ const Home = () => {
              </div>
             <div className=" my-5 md:my-10 lg:my-20">
                <TopRated/>
+             </div>
+            <div className=" my-5 md:my-10 lg:my-20">
+
+               <ContactForm/>
+               
              </div>
         </div>
         
