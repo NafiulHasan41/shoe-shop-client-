@@ -7,7 +7,7 @@ import Carousel from "./Carousel";
 
 const Banner = () => {
     return (
-        <header className=" bg-bannerImg   w-full min-h-[calc(100vh-330px)] shadow-xl  ">
+        <header className=" bg-bannerImg   w-full min-h-[calc(100vh-330px)] shadow-2xl ">
 
          <div className=" px-6 mx-auto w-full rounded-b-3xl bg-gray-900/30  shadow-xl  pt-40 md:pt-10 ">
         <div className="items-center  lg:flex w-full">
