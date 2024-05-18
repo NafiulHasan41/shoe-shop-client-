@@ -12,14 +12,14 @@ const ContactForm = () => {
         const message = form.message.value;
         
         const review = { name, email, message };
-        console.log(review);
+       
         try {
             await axios.post(
              `${import.meta.env.VITE_API_URL}/reviews`,
              review
            )
           
-           Swal.fire('Review sent Successfully!')
+           Swal.fire('Message sent Successfully!')
            e.target.reset();
           
          } catch (err) {

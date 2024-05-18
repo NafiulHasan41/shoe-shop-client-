@@ -38,9 +38,22 @@ const BestSelling = () => {
             Best<span className="text-blue-500"> Selling Products </span></h1>
     </div>
     <div className=' my-5 md:my-8 lg:my-12'>
-        <Swiper loop={true} slidesPerView={3} spaceBetween={30} freeMode={true} pagination={{
+        <Swiper loop={true} slidesPerView={1}  spaceBetween={30} freeMode={true} pagination={{
       clickable: true,
-    }} modules={[FreeMode, Pagination]} className="mySwiper">
+    }} modules={[FreeMode, Pagination]}
+    breakpoints={{
+      640: {
+          slidesPerView: 1,
+      },
+      768: {
+          slidesPerView: 2,
+      },
+      1024: {
+          slidesPerView: 3,
+      },
+  }}
+    
+    className="mySwiper">
 
             {
             shoe.map((shoe) => (
