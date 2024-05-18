@@ -22,7 +22,7 @@ import ErrorPage from "../pages/ErrorPage";
           element: <Login></Login>
         },
         {
-          path: 'signup',
+          path: 'register',
           element: <Register/>
         }
       ]
