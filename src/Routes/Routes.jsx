@@ -7,6 +7,9 @@ import Register from "../pages/Authentication/Register";
 import Root from "../layouts/Root";
 import ErrorPage from "../pages/ErrorPage";
 import Shop from "../pages/Shop";
+import PrivateRoute from "./PrivateRoutes";
+import DetailsShoe from "../pages/DetailsShoe";
+import Cart from "../pages/Cart";
 
   export const router = createBrowserRouter([
     {
@@ -30,6 +33,16 @@ import Shop from "../pages/Shop";
         {
           path: 'shop',
           element: <Shop/>
+        }
+        ,
+        {
+          path: '/shoeDetails/:id',
+          element:<PrivateRoute><DetailsShoe/></PrivateRoute>
+        }
+        ,
+        {
+          path: '/cart',
+          element:<PrivateRoute><Cart/></PrivateRoute>
         }
       ]
     },

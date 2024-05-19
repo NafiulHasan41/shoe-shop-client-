@@ -1,5 +1,6 @@
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 const ShoeCard = ( {shoe} ) => {
     return (
         <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
@@ -15,9 +16,11 @@ const ShoeCard = ( {shoe} ) => {
 
         <div className="flex items-center justify-between px-3 py-2 bg-gray-200 dark:bg-gray-700">
           <span className="font-bold text-gray-800 dark:text-gray-200">${shoe.price}</span>
-          <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
+           <Link to={`/shoeDetails/${shoe?._id}`} >
+           <button className="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">
             Add to cart
           </button>
+           </Link>
         </div>
       </div>
     </div>
