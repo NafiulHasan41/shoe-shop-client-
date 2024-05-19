@@ -1,65 +1,81 @@
-import { useState } from "react";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
-const AddItem = () => {
+const UpdateShoe = () => {
 
+    const { title , image_url , price , short_description , _id , category , tag , size } = useLoaderData();
 
     const axiosSecure = useAxiosSecure();
 
-    const [ category , setCategory] = useState('');
-    const [ size , setSize]= useState('');
-    const [ tag , setTag] = useState('');
+    const [ category1, setCategory] = useState('');
+    const [ size1 , setSize]= useState('');
+    const [ tag1 , setTag] = useState('');
+
+    useEffect(()=>
+        {
+            setCategory(category);
+            setSize(size);
+            setTag(tag);
+        },[])
 
 
-     const handleAddItem = async (e) => {
+    const handleUpdateShoe = async (e) => {
+
         e.preventDefault();
         const title = e.target.title.value;
         const image_url = e.target.image_url.value;
-        const short_description = e.target.description.value;
         const price = parseFloat(e.target.price.value);
-        const data ={title, image_url, short_description, price, category, size, tag};
-        console.log(data);
+        const description = e.target.description.value; 
 
-        try
-        {
-            const res = await axiosSecure.post('/shoes', data);
+        const newData = { title , image_url , price , description , category: category1 , size: size1 , tag: tag1 }
+
+    
+
+        try{
+
+            const res = await axiosSecure.patch(`/shoesUpdate/${_id}`, newData);
             console.log(res.data)
-            if(res.data.insertedId){
+            if(res.data.modifiedCount > 0){
                 // show success popup
-               e.target.reset();
+                // reset();
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${data.title} is added to the shop.`,
+                    title: `${newData.title} is updated to the menu.`,
                     showConfirmButton: false,
                     timer: 1500
                   });
+            }
+
         }
-       }
         catch(err){
-            Swal.fire(err.message)
+            Swal.fire(err.message);
         }
 
         
-     }
+
+    }
+
+
     return (
         <div className=" my-5 md:my-5 m-5">
         <div className=" flex-1 card shrink-0 w-full max-w-sm md:max-w-full shadow-2xl bg-[#a0c5c4]">
-            <form onSubmit={handleAddItem} className="card-body">
+            <form  onSubmit={handleUpdateShoe} className="card-body">
    
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text text-[#86664b] text-xl font-bold">Shoe Title</span>
                     </label>
-                    <input type="text" name="title" placeholder="Title" className="input input-bordered" required />
+                    <input type="text" name="title" placeholder="Title" className="input input-bordered"  defaultValue={title} required />
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text text-[#86664b] text-xl font-bold">Shoe Image URL</span>
                     </label>
-                    <input type="url" name="image_url" placeholder="image_url" className="input input-bordered" required />
+                    <input type="url" name="image_url" placeholder="image_url" className="input input-bordered" defaultValue={image_url} required />
                 </div>
                 <div className="flex flex-col lg:flex-row gap-5">
                 <div className=" flex-1">
@@ -67,7 +83,7 @@ const AddItem = () => {
                             setCategory(e.target.value)
    
                             }}
-                            value={category}
+                            value={category1}
                             name='sort'
                             id='sort'
                             className='border p-4 rounded-md text-white bg-blue-400 border-blue-400 w-full'
@@ -86,7 +102,7 @@ const AddItem = () => {
                             setSize(e.target.value)
    
                             }}
-                            value={size}
+                            value={size1}
                             name='sort'
                             id='sort'
                             className='border p-4 rounded-md text-white bg-blue-400 border-blue-400 w-full'
@@ -112,7 +128,7 @@ const AddItem = () => {
                             setTag(e.target.value)
    
                             }}
-                            value={tag}
+                            value={tag1}
                             name='sort'
                             id='sort'
                             className='border p-4 rounded-md text-white bg-blue-400 border-blue-400 w-full'
@@ -130,7 +146,7 @@ const AddItem = () => {
                             <span className="label-text text-[#86664b] text-xl font-bold">Price(Us Dollar)</span>
                         </label>
                         <input type="number" name="price" placeholder="100$"
-                            className="input input-bordered" required />
+                            className="input input-bordered" defaultValue={price} required />
                     </div>
                 </div>
    
@@ -139,12 +155,12 @@ const AddItem = () => {
                         <span className="label-text text-[#86664b] text-xl font-bold">Short Description</span>
                     </label>
                     <input type="text" name="description" placeholder="Short description" className="input input-bordered"
-                        required />
+                     defaultValue={short_description}    required />
                 </div>
    
                 
                 <div className="form-control mt-6">
-                    <button className="btn   text-[#86664b] border-none text-xs md:text-xl">Add Shoe</button>
+                    <button className="btn   text-[#86664b] border-none text-xs md:text-xl">Update Shoe</button>
                 </div>
             </form>
    
@@ -154,4 +170,4 @@ const AddItem = () => {
     );
 };
 
-export default AddItem;
+export default UpdateShoe;

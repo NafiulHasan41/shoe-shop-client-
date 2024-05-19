@@ -15,6 +15,13 @@ import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/Dashboard/AdminHome";
 import AddItem from "../pages/Dashboard/AddItem";
 import MangeShoes from "../pages/Dashboard/MangeShoes";
+import UpdateShoe from "../pages/Dashboard/UpdateShoe";
+import AllUsers from "../pages/Dashboard/AllUsers";
+import UserQuery from "../pages/Dashboard/UserQuery";
+import UserHome from "../pages/Dashboard/Users/UserHome";
+import Payment from "../pages/Dashboard/Users/Payment";
+import OrderHistory from "../pages/Dashboard/Users/OrderHistory";
+
 
   export const router = createBrowserRouter([
     {
@@ -56,7 +63,23 @@ import MangeShoes from "../pages/Dashboard/MangeShoes";
       path: 'dashboard',
       element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
-       
+        // normal user routes
+        {
+          path: 'userHome',
+          element: <UserHome/>
+        },
+        {
+          path: 'cart',
+          element:<Cart/>
+        },
+        {
+          path: 'payment',
+          element: <Payment/>
+        },
+        {
+          path: 'orderHistory',
+          element:<OrderHistory/>
+        },
         // admin only routes
         {
           path: 'adminHome',
@@ -71,7 +94,21 @@ import MangeShoes from "../pages/Dashboard/MangeShoes";
           path: 'manageItems',
           element: <AdminRoute><MangeShoes/></AdminRoute>
         },
-
+        {
+          path: 'updateItem/:id',
+          element: <AdminRoute><UpdateShoe/></AdminRoute>,
+          loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/shoesDelete/${params.id}`)
+       
+        },
+        {
+          path: 'users',
+          element: <AdminRoute><AllUsers/></AdminRoute>
+        },
+        {
+          path: 'usersQuery',
+          element: <AdminRoute><UserQuery/></AdminRoute>,
+          loader: () => fetch(`${import.meta.env.VITE_API_URL}/reviews`)
+        }
       ]
     }
 

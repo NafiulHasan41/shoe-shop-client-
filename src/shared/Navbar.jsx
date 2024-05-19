@@ -112,6 +112,12 @@ const Navbar = () => {
                           }>Dashboard</NavLink>
 
                     }
+                    {
+                        user && !isAdmin && <NavLink to="/dashboard/userHome"  className={({ isActive }) =>
+                            isActive ? " text-white hover:bg-cyan-700 font-bold   border-none" : "font-bold my-2 hover:bg-cyan-700  md:mx-2  text-blue-500 rounded-lg  border-none"
+                          }>Dashboard</NavLink>
+
+                    }
             
             </>
           );
