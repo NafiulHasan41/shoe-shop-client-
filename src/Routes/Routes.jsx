@@ -10,6 +10,10 @@ import Shop from "../pages/Shop";
 import PrivateRoute from "./PrivateRoutes";
 import DetailsShoe from "../pages/DetailsShoe";
 import Cart from "../pages/Cart";
+import Dashboard from "../layouts/Dashboard";
+import AdminRoute from "./AdminRoute";
+import AdminHome from "../pages/Dashboard/AdminHome";
+import AddItem from "../pages/Dashboard/AddItem";
 
   export const router = createBrowserRouter([
     {
@@ -46,6 +50,25 @@ import Cart from "../pages/Cart";
         }
       ]
     },
+    
+    {
+      path: 'dashboard',
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+      children: [
+       
+        // admin only routes
+        {
+          path: 'adminHome',
+          element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+        },
+
+        {
+          path: 'addItems',
+          element: <AdminRoute><AddItem/></AdminRoute>
+        },
+
+      ]
+    }
 
    
   ]);

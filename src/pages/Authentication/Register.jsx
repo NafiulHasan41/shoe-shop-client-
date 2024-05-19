@@ -34,13 +34,13 @@ const Register = () => {  const axiosPublic = useAxiosPublic();
                            
                             if (res.data.insertedId) {
 
-                                await axiosPublic.post(`/jwt`,
-                                {
-                                  email: data.email,
-                                },
-                                { withCredentials: true }
-                              )
-                                Swal.fire('User created successfully and Login Successful');
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'User created successfully.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
                                 reset();
                                 navigate('/');
                             }

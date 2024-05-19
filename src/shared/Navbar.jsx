@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 
 
@@ -10,7 +11,7 @@ import useCart from "../hooks/useCart";
 
 const Navbar = () => {
 
-    const { user , loading , logOut } = useAuth();
+    const { user , loading , logOut , setLoading } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     
     const toggleMenu = () => {
@@ -19,6 +20,7 @@ const Navbar = () => {
 
 
     const [cart] = useCart();
+    const [isAdmin] = useAdmin();
 
 
 
@@ -83,9 +85,10 @@ const Navbar = () => {
         const handleLogOut = () => {
             logOut()
               .then(() => {
+                setLoading(false);
                 Swal.fire("User Logged out Successfully");
-        
                 navigate("/login");
+                
               })
               .catch((error) => {
                 Swal.fire(error.message);
@@ -102,6 +105,13 @@ const Navbar = () => {
                 <NavLink to="/shop"  className={({ isActive }) =>
                       isActive ? " text-white hover:bg-cyan-700 font-bold   border-none" : "font-bold my-2 hover:bg-cyan-700  md:mx-2  text-blue-500 rounded-lg  border-none"
                     }>Shop</NavLink>
+
+                    {
+                        user && isAdmin && <NavLink to="/dashboard/adminHome"  className={({ isActive }) =>
+                            isActive ? " text-white hover:bg-cyan-700 font-bold   border-none" : "font-bold my-2 hover:bg-cyan-700  md:mx-2  text-blue-500 rounded-lg  border-none"
+                          }>Dashboard</NavLink>
+
+                    }
             
             </>
           );

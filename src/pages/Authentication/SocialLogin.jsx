@@ -24,13 +24,8 @@ const SocialLogin = () => {
             .then( async (res) =>{
                 console.log(res.data);
 
-               await axiosPublic.post(`/jwt`,
-                {
-                  email: result?.user?.email,
-                },
-                { withCredentials: true }
-              )
               Swal.fire("Login Successful")
+              
               navigate(location?.state ? location.state.from : "/");
             })
             .catch(err => Swal.fire(err));

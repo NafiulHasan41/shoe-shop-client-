@@ -12,6 +12,7 @@ import TopRated from "../components/TopRated";
 const Home = () => {
     return (
         <div className=" -mt-20">
+          
             <Banner/>
 
             <div className=" my-5 md:my-10 lg:my-20">

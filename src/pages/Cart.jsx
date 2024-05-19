@@ -40,7 +40,7 @@ const Cart = () => {
     }
 
     return (
-        <div>
+        <div className=" m-5 md:m-10">
             <div className="flex justify-evenly mb-8">
                 <h2 className="text-4xl">Items: {cart.length}</h2>
                 <h2 className="text-4xl">Total Price: {totalPrice}</h2>

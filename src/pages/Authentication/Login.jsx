@@ -3,19 +3,22 @@ import {  useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { IoEye ,IoEyeOff } from "react-icons/io5";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2"
 import SocialLogin from "./SocialLogin";
+
 
 
 
 const Login = () => {
 
 
-    const {  signIn   } = useAuth();
+    const {  signIn  } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const axiosPublic = useAxiosPublic()
+
+    
+
+
     
 
     const handleLogin = async e => {
@@ -26,16 +29,17 @@ const Login = () => {
       
         try {
             //User Login
-            const result = await signIn(email, password)
-           
-            await axiosPublic.post(`/jwt`,
-              {
-                email: result?.user?.email,
-              },
-              { withCredentials: true }
-            )
-          
-            Swal.fire('Login Successful')
+             await signIn(email, password)
+         
+             Swal.fire({
+                title: 'User Login Successful.',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
 
             if( location.state === "/login")
                 {
