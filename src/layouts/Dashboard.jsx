@@ -78,7 +78,7 @@ const Dashboard = () => {
                             <li>
                                 <NavLink to="/dashboard/manageItems">
                                     <FaList></FaList>
-                                    Manage Items</NavLink>
+                                    Manage Shoes</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/bookings">
